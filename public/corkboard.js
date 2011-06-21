@@ -72,13 +72,6 @@ $(function() {
     editNote($(this));
   });
 
-  $('.mode').hover(function() {
-    $('.note-placeholder', this).fadeIn();
-  }, function() {
-    $('.note-placeholder', this).fadeOut();
-  });
-
-
   $( ".draggable" ).draggable();
   $( ".droppable" ).droppable({
     hoverClass: 'hovered',

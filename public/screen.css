@@ -57,30 +57,26 @@ h2 {
 .note-placeholder {
   border: 3px yellow dashed;
   margin: 3px;
-  display: none;
+  visibility: hidden;
 }
 
 .hovered .note-placeholder {
-  display: block;
+  visibility: visible;
 }
 
-.note-placeholder .new-note {
-  margin: 0 auto;
-  margin-top: 27px;
+.new-note {
   border-radius: 40px;
   -webkit-border-radius: 40px;
   -moz-border-radius: 40px;
-  height: 40px;
-  width: 40px;
-  display: block;
-  background-color: #41EA9C;
-  border: 2px green solid;
-  color: white;
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  background-color: rgba(255,255,255,0.5);
   font-size: 40px;
-  line-height: 33px;
+  line-height: 25px;
   text-align: center;
   text-decoration: none;
-  text-shadow: 1px 1px 1px green;
+  color: black;
 }
 
 

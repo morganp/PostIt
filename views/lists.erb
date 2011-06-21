@@ -5,7 +5,10 @@
   
   <% for mode in @modes %>
     <div id="<%= mode.title %>" class="droppable ui-widget-header mode">
-      <h2><%= mode.title.capitalize %></h2>
+      <h2>
+        <%= mode.title.capitalize %>
+        <small><a href='#' class='new-note'>+</a></small>
+      </h2>
   
       <% for note in mode.notes  %>
         <div id="<%= note.id %>" class="note draggable ui-widget-content"> 
@@ -18,12 +21,9 @@
         </div>
       <% end %>
       
-      <div class="note-placeholder">
-        <a href='#' class='new-note'>+</a>
-      </div>
+      <div class="note-placeholder"></div>
 
     </div>
   <% end %>
 
 </div>
-
