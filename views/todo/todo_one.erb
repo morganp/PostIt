@@ -1,0 +1,13 @@
+
+<p>
+<strong>Status</strong> <% if @todo.done %>Done<% else %>TODO<% end %>
+</p>
+<p>
+<strong>Description</strong> <%=@todo.desc%>
+</p>
+<p>
+<a href="/todo/<%=@todo.id%>/edit">EDIT</a><br  />
+DELETE<br  />
+<a href="/todo">View All</a>
+</p>
+

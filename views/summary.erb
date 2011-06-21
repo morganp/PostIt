@@ -1,0 +1,39 @@
+<h1>Users</h1>
+<table>
+  <% for user in @users %>
+    <tr>
+      <td><%= user.name %></td>
+      <td><%= user.email %></td>
+    </tr>
+  <% end %>
+</table>
+
+<h1>Colours</h1>
+<table>
+  <% for colour in @colours %>
+    <tr>
+      <td><%= colour.background %></td>
+      <td><%= colour.foreground %></td>
+    </tr>
+  <% end %>
+</table>
+
+<h1>Modes</h1>
+<table>
+  <% for mode in @modes %>
+    <tr>
+      <td><%= mode.title %></td>
+    </tr>
+  <% end %>
+</table>
+
+<h1>Notes</h1>
+<table>
+  <% for note in @notes %>
+    <tr>
+      <td><%= note.title %></td>
+      <td><%= note.description %></td>
+    </tr>
+  <% end %>
+</table>
+

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%=@title%></title>
+    <link href="/screen.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="jquery-ui.js"></script>
+    <!--  <script type="text/javascript" src="drag.js"></script> -->
+    <script>
+      $(function() {
+        $( ".draggable" ).draggable();
+        $( ".droppable" ).droppable({
+          drop: function( event, ui ) {
+            $( this )
+            .addClass( "ui-state-highlight" )
+            .find( "p" )
+            .html( "Dropped!" );
+          }
+        });
+
+      });
+    </script>
+
+  </head>
+  <body>
+    <%= yield %>
+  </body>
+</html>

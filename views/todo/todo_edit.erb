@@ -1,0 +1,16 @@
+<% @title = "Create/Edit" %>
+
+<%# @new is true for new ojects and nil for updates %>
+<form method="post" action="/todo<% if @new.nil?%>/<%=@todo.id%><%end%>" >
+   <input name="_method" type="hidden" value="<% if @new.nil?%>put<%else%>post<%end%>" />
+<div>
+Done
+<input type="checkbox" name="post[done]" value="true" 
+   <% if @todo.done == true%>checked<% end %>  /><br  />
+
+<textarea name="post[desc]"><%=@todo.desc%></textarea><br  />
+
+<button type="submit"><% if @new.nil? %>Update<% else %>Create<% end %></button>
+</div>
+</form>
+
