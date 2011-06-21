@@ -1,10 +1,7 @@
-<div id='header'>
-  <a href='/note/create'>New Note</a>
-</div>
 <div id="content">
   
-  <% for mode in @modes %>
-    <div id="<%= mode.title %>" class="droppable ui-widget-header mode">
+  <% @modes.each_with_index do |mode,index| %>
+<div id="<%= mode.title %>" class="droppable ui-widget-header<% if index==0 %> first-mode<%end%> mode">
       <h2>
         <%= mode.title.capitalize %>
         <small><a href='#' class='new-note'>+</a></small>

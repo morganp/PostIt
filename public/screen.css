@@ -1,11 +1,17 @@
 
-table.listing {
-  width: 100%;
-}
-
-
-table.listing tr.droppable-hover td {
-	background-color: #E1F9BC;
+/* Header bar*/
+#header {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #999;
+  position: fixed;
+  margin: 0px;
+  padding: 0px;
+  height: 1.5em;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  vertical-align: top;
+  z-index: 10000;
 }
 
 
@@ -22,9 +28,13 @@ h2 {
 }
 
 
+
 .mode {
   min-height: 100px;
   padding: 10px;
+}
+.first-mode h2 {
+  margin-top: 10px;
 }
 .mode:after{
   clear: both;
@@ -36,12 +46,12 @@ h2 {
 }
 
 /*#IceBox {
-  background-color: rgba(0,0,0,0.2);
+background-color: rgba(0,0,0,0.2);
 }
-#ToDo {
+  #ToDo {
   background-color: rgba(0,0,0,0.1);
 }
-#Done {
+  #Done {
   background-color: rgba(0,0,0,0.05);
 }*/
 
