@@ -91,9 +91,11 @@ end
 
 post '/note/:id' do
   @note = Note.find_by_id(params[:id])
-  @mode = Mode.find_by_title( params['mode_name'] )
-  
-  @note.mode = @mode 
+
+  @note.mode = Mode.find_by_title( params['mode_name'] ) if params['mode_name']
+  @note.title = params['title'] if params['title']
+  @note.description = params['description'] if params['description']
+
   @note.save
 end
 

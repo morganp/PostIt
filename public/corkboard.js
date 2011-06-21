@@ -7,30 +7,46 @@ $(function() {
       draggable(); //make draggable again
   }
 
-  function updateNote(id, attributes) {
+  function postNoteUpdate(id, attributes) {
     $.post("note/"+id, attributes);
   }
 
-  $('.note .title').dblclick(function() {
-    var title = $(this);
-    if (!title.hasClass('editing')) {
-      var note = title.closest('.note');
-      var inp = $('<input type="text">').val(title.text().trim());
-      title.addClass('editing');
+  $('.note').dblclick(function() {
+    var note = $(this);
+    if (!note.hasClass('editing')) {
+      note.addClass('editing');
 
-      inp.keypress(function(e) {
+      var title = $('.title', note);
+      var description = $('.description', note);
+      var inp = $('<input type="text">').val(title.text().trim());
+      var textArea = $('<textarea></textarea>').text(description.text().trim());
+      
+      var updateNote = function(e) {
         if (e.which === 13) {
           var new_title = inp.val().trim();
-          updateNote(note.attr('id'), {title: new_title});
+          var new_description = textArea.val().trim();
+
+          postNoteUpdate(note.attr('id'), {
+            title: new_title, 
+            description: new_description
+          });
+
           title.html(new_title);
-          title.removeClass('editing');
+          description.html(new_description);
+
+          note.removeClass('editing');
         }
-      });
-      $(this).html(
-        inp.focus()
-      );
+      };
+      
+      inp.keypress(updateNote);
+      textArea.keypress(updateNote);
+
+      title.html(inp);
+      description.html(textArea);
     }
   });
+
+
   $( ".draggable" ).draggable();
   $( ".droppable" ).droppable({
     hoverClass: 'hovered',
@@ -40,7 +56,7 @@ $(function() {
       var note = ui.draggable;
       moveNoteToMode(note, this);
       //Send Post request, sinatra handles this to update
-      updateNote(note.attr('id'), {mode_name: mode_id});
+      postNoteUpdate(note.attr('id'), {mode_name: mode_id});
     }
   });
 
