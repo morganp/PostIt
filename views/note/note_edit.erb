@@ -1,0 +1,16 @@
+<% @title = "Create/Edit" %>
+
+<%# @new is true for new ojects and nil for updates %>
+<form method="post" action="/note<% if @new.nil?%>/<%=@note.id%><%end%>" >
+   <input name="_method" type="hidden" value="<% if @new.nil?%>put<%else%>post<%end%>" />
+<div>
+Title
+<input type="text"  name="post[title]" value="<%=@note.title%>"/><br  />
+
+Description
+<textarea name="post[description]"><%=@note.description%></textarea><br  />
+
+<button type="submit"><% if @new.nil? %>Update<% else %>Create<% end %></button>
+</div>
+</form>
+
