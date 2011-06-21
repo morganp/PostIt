@@ -71,5 +71,6 @@ h2 {
   background-image: -moz-linear-gradient(#FFFAAE 0%, #FFF057 90%);
   -webkit-box-shadow: rbga(0,0,0,0.2) 0px 5px 5px;
   -moz-box-shadow: rgba(0,0,0,0.2) 0px 5px 5px; /* FF 3.5+ */
+  font-family: 'Copse', Times, serif;
 }
 
