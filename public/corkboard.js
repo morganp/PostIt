@@ -7,12 +7,16 @@ $(function() {
       draggable(); //make draggable again
   }
 
+  function postNewNote(note, attributes) {
+    $.post("/note/create", attributes, function(data) {
+      note.attr('id', data);
+    });
+  }
   function postNoteUpdate(id, attributes) {
     $.post("note/"+id, attributes);
   }
 
-  $('.note').dblclick(function() {
-    var note = $(this);
+  function editNote(note) {
     if (!note.hasClass('editing')) {
       note.addClass('editing');
 
@@ -25,12 +29,19 @@ $(function() {
         if (e.which === 13) {
           var new_title = inp.val().trim();
           var new_description = textArea.val().trim();
+          var new_mode_name = note.closest('.mode').attr('id');
 
-          postNoteUpdate(note.attr('id'), {
+          var id = note.attr('id');
+          var attributes = {
             title: new_title, 
-            description: new_description
-          });
-
+            description: new_description,
+            mode_name: new_mode_name
+          };
+          if (id) {
+            postNoteUpdate(note.attr('id'), attributes);
+          } else {
+            postNewNote(note, attributes);
+          }
           title.html(new_title);
           description.html(new_description);
 
@@ -44,6 +55,27 @@ $(function() {
       title.html(inp);
       description.html(textArea);
     }
+  }
+  function addNote(mode) {
+    var newNote = $('<div class="note"><div class="title"></div><div class="description"></div></div>');
+    newNote.insertBefore($('.note-placeholder', mode));
+    newNote.draggable();
+    editNote(newNote);
+  }
+
+  $('.new-note').click(function() {
+    addNote($(this).closest('.mode'));
+    return false;
+  });
+
+  $('.note').live('dblclick', function() {
+    editNote($(this));
+  });
+
+  $('.mode').hover(function() {
+    $('.note-placeholder', this).fadeIn();
+  }, function() {
+    $('.note-placeholder', this).fadeOut();
   });
 
 
