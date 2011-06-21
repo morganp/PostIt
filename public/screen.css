@@ -6,31 +6,11 @@ div#container {
   border: 2px solid; 
 }
 
-div#icebox {
-  background-color: #555;
-  min-height: 100px;
-  padding: 10px;
-}
 
-
-div#todo {
-  background-color: #AAA;
-  min-height:100px;
-  padding: 10px;
-}
-
-
-div#done {
-  background-color: #EEE;
-  min-height:100px;
-  padding: 10px;
-}
 
 /* Drag Drop Specific CSS */
 .draggable { 
-  border: 2px solid; 
-  padding: 0.25em;
-  margin: 7.5px;
+
 }
 
 table.listing {
@@ -40,5 +20,59 @@ table.listing {
 
 table.listing tr.droppable-hover td {
 	background-color: #E1F9BC;
+}
+
+
+/* List Page Styling */
+.mode {
+  min-height: 100px;
+  padding: 10px;
+}
+.mode:after{
+  clear: both;
+  content: ".";
+  display: block;
+  height: 0;
+  visibility: hidden;
+  font-size: 0;
+}
+
+#icebox {
+  background-color: #555;
+}
+#todo {
+  background-color: #AAA;
+}
+#done {
+  background-color: #EEE;
+}
+
+
+/* Note Styling */
+.note, .note-placeholder {
+  width: 100px;
+  height: 100px;
+  float: left;
+  border: 2px solid; 
+  padding: 3px;
+  margin: 5px;
+}
+.note-placeholder {
+  border: 3px yellow dashed;
+  margin: 3px;
+  visibility: hidden;
+}
+
+.hovered .note-placeholder {
+  visibility: visible;
+}
+.note {
+  z-index: 100;
+  border:1px solid #FFF057;
+  background-color: rgba(60, 132, 198, 0.8);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 90%, from(#FFFAAE), to(#FFF057));
+  background-image: -moz-linear-gradient(#FFFAAE 0%, #FFF057 90%);
+  -webkit-box-shadow: rbga(0,0,0,0.2) 0px 5px 5px;
+  -moz-box-shadow: rgba(0,0,0,0.2) 0px 5px 5px; /* FF 3.5+ */
 }
 
