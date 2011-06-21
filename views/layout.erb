@@ -21,13 +21,20 @@
     <script>window.jQuery || document.write("<script src='/jquery-ui-1.8.13.js'>\x3C/script>")</script>
     <script>
       $(function() {
+        function moveNoteToMode(note,mode) {
+          note.
+            remove(). //remove from old mode
+            attr('style', ''). //remove offset
+            insertBefore($('.note-placeholder', mode)). //insert into new mode
+            draggable(); //make draggable again
+        }
+
         $( ".draggable" ).draggable();
         $( ".droppable" ).droppable({
+          hoverClass: 'hovered',
           drop: function( event, ui ) {
-            $( this )
-            .addClass( "ui-state-highlight" )
-            .find( "p" )
-            .html( "Dropped!" );
+            var note = ui.draggable;
+            moveNoteToMode(note, this);
           }
         });
 
