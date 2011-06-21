@@ -57,11 +57,19 @@ error do
    "Application error"
 end
 
+## TODO ##
+# Acts as lists for reordering posts
+# https://rubygems.org/gems/acts_as_list
+
 ## ROUTES ##
 # These direct web requests
 # There are 4 Restful types, POST(create), PUT(update), GET(view), DELETE(gone)
 
 get '/' do
+ redirect '/list'
+end
+
+get '/debug' do
    @users   = User.all
    @colours = Colour.all
    @modes   = Mode.all
@@ -71,13 +79,15 @@ get '/' do
 end
 
 
-get '/list' do
+get '/list/?' do
   @user  = User.find_by_email('morgan.prior@gmail.com')
   @modes = @user.modes.all
   @notes = @user.notes.all
 
   erb :'lists'
 end
+
+
 
 post '/note/:id' do
   @note = Note.find_by_id(params[:id])
@@ -87,71 +97,48 @@ post '/note/:id' do
   @note.save
 end
 
+# From to create new
+get '/note/create' do
+  @note = Note.new
+  @new  = true
+  erb :'note/note_edit'
+end
 
+# EDIT
+get '/note/:id/edit' do
+  @note = Note.find_by_id(params[:id])
+  erb :'note/note_edit'
+end
+
+# CREATE
+post '/note/?' do 
+   @user  = User.first
+   mode   = @user.modes.first
+   colour = @user.colours.first
+   @note  = Note.create(
+     :title       => params['post']['title'],
+     :description => params['post']['description'],
+     :mode_id     => mode.id,
+     :colour_id   => colour.id
+   )
+   @note.save
+  redirect '/list'
+end
+
+# UPDATE
+put '/note/:id/?' do
+  @note = Note.find_by_id(params[:id])
+  @note.title       = params['post']['title']
+  @note.description = params['post']['description']
+  #@note.mode_id     = mode.id
+  #@note.colour_id   = colour.id
+  
+  @note.save
+  redirect '/list'
+end
 
 #for large apps you can:
 #load 'other_file.rb'
-
-#Note /? this makes trailing / optional, which helps keep things running smoothly
-get '/todo/?' do
-   #@todo = Todo.find(:all)
-   #erb :'todo/todo_all'
-end
-
-get '/todo/createapi' do
-   #@todo = Todo.new
-  
-   #msg = request.fullpath
-   #msg['/todo/createapi?todo='] = ''
-   #msg.gsub!('%20', ' ')
-
-   #@todo = Todo.create(
-   #   :done => false,
-   #   :desc => msg
-   #)
-
-   #redirect '/todo'
-end
-
-
-get '/todo/create/?' do
-   #This is very important/cool
-   #Create a new object (but not sent to database)
-   #Through the Activerecord (ORM) functions it will be initialised with the database defaults
-
-   #The @new object can be used to determin whether the template is POST (Create) or PUT (Modify)
-   #@todo = Todo.new
-   #@new = true
-   #erb :'todo/todo_edit'
-end
-
-
-post '/todo/?' do
-   #@todo = Todo.create(
-   #   :done => params['post']['done'],
-   #   :desc => params['post']['desc']
-   #)
-   #Retun to view of newly created item
-   #redirect '/todo/' + @todo.id.to_s
-end
-
-get '/todo/:id/edit/?' do
-   #@todo = Todo.find(:first, :conditions => ["id = ?", params[:id] ])
-   #erb :'todo/todo_edit'
-end
-   
-put '/todo/:id/?' do
-   #@todo = Todo.find(:first, :conditions => ["id = ?", params[:id] ])
-   #@todo.done = params['post']['done']
-   #@todo.desc = params['post']['desc']
-   #@todo.save
-   #redirect '/todo/' + params[:id]
-end
-
-get '/todo/:id/?' do
-   #@todo = Todo.find(:first, :conditions => ["id = ?", params[:id] ])
-   #erb :'todo/todo_one'
-end
 
 
 
