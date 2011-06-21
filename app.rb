@@ -91,9 +91,11 @@ end
 
 post '/note/:id' do
   @note = Note.find_by_id(params[:id])
-  @mode = Mode.find_by_title( params['mode_name'] )
   
+  #JS AJAX drag drop update uses this
+  @mode = Mode.find_by_title( params['mode_name'] )
   @note.mode = @mode 
+  
   @note.save
 end
 
