@@ -1,19 +1,28 @@
+<div id='header'>
+  <a href='/note/create'>New Note</a>
+</div>
 <div id="content">
+  
   <% for mode in @modes %>
-
     <div id="<%= mode.title %>" class="droppable ui-widget-header mode">
       <h2><%= mode.title.capitalize %></h2>
-        <% for note in mode.notes  %>
-      
-          <div id="<%= note.id %>" class="note draggable ui-widget-content"> 
-            <%= note.title %> : <%= note.description %> 
+  
+      <% for note in mode.notes  %>
+        <div id="<%= note.id %>" class="note draggable ui-widget-content"> 
+          <div class='title'>
+            <%= note.title %>
           </div>
-       
-        <% end %>
-        <div class="note-placeholder">
+          <div class='description'>
+            <%= note.description %>
+          </div>
         </div>
+      <% end %>
+      
+      <div class="note-placeholder">
       </div>
 
+    </div>
   <% end %>
+
 </div>
 

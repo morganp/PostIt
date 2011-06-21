@@ -74,3 +74,14 @@ h2 {
   font-family: 'Copse', Times, serif;
 }
 
+.note .title {
+  border-bottom: 1px black solid;
+}
+
+.note input, .note textarea {
+  width: 94px;
+}
+.note textarea {
+  height: 65px;
+  margin-top: 3px;
+}

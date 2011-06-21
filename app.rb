@@ -88,17 +88,31 @@ get '/list/?' do
 end
 
 
+post '/note/create' do
+   #AJAX Note creation 
+   @note             = Note.new
+   @note.mode        = Mode.find_by_title( params['mode_name'] ) if params['mode_name']
+   @note.title       = params['title'] if params['title']
+   @note.description = params['description'] if params['description']
+
+   @note.save
+
+   "#{@note.id}"
+end
 
 post '/note/:id' do
   @note = Note.find_by_id(params[:id])
-  
-  #JS AJAX drag drop update uses this
-  @mode = Mode.find_by_title( params['mode_name'] )
-  @note.mode = @mode 
-  
+
+  @note.mode = Mode.find_by_title( params['mode_name'] ) if params['mode_name']
+  @note.title = params['title'] if params['title']
+  @note.description = params['description'] if params['description']
+
   @note.save
 end
 
+
+
+## Tradional forms
 # From to create new
 get '/note/create' do
   @note = Note.new
