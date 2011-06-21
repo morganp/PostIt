@@ -37,13 +37,13 @@ table.listing tr.droppable-hover td {
   font-size: 0;
 }
 
-#icebox {
+#IceBox {
   background-color: #555;
 }
-#todo {
+#ToDo {
   background-color: #AAA;
 }
-#done {
+#Done {
   background-color: #EEE;
 }
 

@@ -72,12 +72,22 @@ end
 
 
 get '/list' do
-  @user = User.find_by_email('morgan.prior@gmail.com')
+  @user  = User.find_by_email('morgan.prior@gmail.com')
   @modes = @user.modes.all
   @notes = @user.notes.all
 
   erb :'lists'
 end
+
+post '/note/:id' do
+  @note = Note.find_by_id(params[:id])
+  @mode = Mode.find_by_title( params['mode_name'] )
+  
+  @note.mode = @mode 
+  @note.save
+end
+
+
 
 #for large apps you can:
 #load 'other_file.rb'

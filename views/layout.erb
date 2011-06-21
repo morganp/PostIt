@@ -33,8 +33,12 @@
         $( ".droppable" ).droppable({
           hoverClass: 'hovered',
           drop: function( event, ui ) {
+            var mode = $(this);
+            var mode_id = mode.attr('id');
             var note = ui.draggable;
             moveNoteToMode(note, this);
+            //Send Post request, sinatra handles this to update
+            $.post("note/" + note.attr('id'), {mode_name: mode_id});
           }
         });
 
