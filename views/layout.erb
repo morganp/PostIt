@@ -24,10 +24,17 @@
         $( ".draggable" ).draggable();
         $( ".droppable" ).droppable({
           drop: function( event, ui ) {
-            $( this )
-            .addClass( "ui-state-highlight" )
-            .find( "p" )
-            .html( "Dropped!" );
+            //$( this )
+            //.addClass( "ui-state-highlight" )
+            //.find( "p" )
+            //.html( "Dropped!" );
+
+            var mode = $(this).attr('id');
+            var note_id = ui.draggable.attr('id');
+
+            //Send Post request, sinatra jhandles this to update
+            $.post("note/" + note_id, {mode_name: mode});
+
           }
         });
 

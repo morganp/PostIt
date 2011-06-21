@@ -1,11 +1,11 @@
 <div id="content">
   <% for mode in @modes %>
 
-    <div id="<%= mode.title.downcase %>" class="droppable ui-widget-header">
+    <div id="<%= mode.title %>" class="droppable ui-widget-header">
       <p>message</p>
         <% for note in mode.notes  %>
       
-          <div class="draggable ui-widget-content"> 
+          <div id="<%= note.id %>" class="draggable ui-widget-content"> 
             <%= note.title %> : <%= note.description %> 
           </div>
        
