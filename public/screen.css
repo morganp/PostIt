@@ -1,17 +1,3 @@
-div#container {
-
-}
-
-.droppable {
-  border: 2px solid; 
-}
-
-
-
-/* Drag Drop Specific CSS */
-.draggable { 
-
-}
 
 table.listing {
   width: 100%;
@@ -24,6 +10,18 @@ table.listing tr.droppable-hover td {
 
 
 /* List Page Styling */
+body {
+  background: url(/img/cork.jpg) white repeat;
+}
+h2 {
+  font-family: 'Cabin Sketch', Helvetica, Arial, sans-serif;
+  font-size: 40px;
+  margin: 5px;
+  padding: 0;
+  border-bottom: 2px black solid;
+}
+
+
 .mode {
   min-height: 100px;
   padding: 10px;
@@ -37,16 +35,15 @@ table.listing tr.droppable-hover td {
   font-size: 0;
 }
 
-#IceBox {
-  background-color: #555;
+/*#IceBox {
+  background-color: rgba(0,0,0,0.2);
 }
 #ToDo {
-  background-color: #AAA;
+  background-color: rgba(0,0,0,0.1);
 }
 #Done {
-  background-color: #EEE;
-}
-
+  background-color: rgba(0,0,0,0.05);
+}*/
 
 /* Note Styling */
 .note, .note-placeholder {
