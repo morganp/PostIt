@@ -2,7 +2,7 @@
   <% for mode in @modes %>
 
     <div id="<%= mode.title %>" class="droppable ui-widget-header mode">
-      <p>message</p>
+      <h2><%= mode.title.capitalize %></h2>
         <% for note in mode.notes  %>
       
           <div id="<%= note.id %>" class="note draggable ui-widget-content"> 
