@@ -6,7 +6,12 @@
         <% for note in mode.notes  %>
       
           <div id="<%= note.id %>" class="note draggable ui-widget-content"> 
-            <%= note.title %> : <%= note.description %> 
+            <div class='title'>
+              <%= note.title %>
+            </div>
+            <div class='description'>
+              <%= note.description %>
+            </div>
           </div>
        
         <% end %>
