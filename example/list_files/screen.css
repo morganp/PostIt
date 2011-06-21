@@ -1,0 +1,44 @@
+div#container {
+
+}
+
+.droppable {
+  border: 2px solid; 
+}
+
+div#icebox {
+  background-color: #555;
+  min-height: 100px;
+  padding: 10px;
+}
+
+
+div#todo {
+  background-color: #AAA;
+  min-height:100px;
+  padding: 10px;
+}
+
+
+div#done {
+  background-color: #EEE;
+  min-height:100px;
+  padding: 10px;
+}
+
+/* Drag Drop Specific CSS */
+.draggable { 
+  border: 2px solid; 
+  padding: 0.25em;
+  margin: 7.5px;
+}
+
+table.listing {
+  width: 100%;
+}
+
+
+table.listing tr.droppable-hover td {
+	background-color: #E1F9BC;
+}
+
