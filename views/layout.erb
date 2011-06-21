@@ -22,31 +22,7 @@
 
     <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.13/jquery-ui.min.js"></script>
     <script>window.jQuery || document.write("<script src='/jquery-ui-1.8.13.js'>\x3C/script>")</script>
-    <script>
-      $(function() {
-        function moveNoteToMode(note,mode) {
-          note.
-            remove(). //remove from old mode
-            attr('style', ''). //remove offset
-            insertBefore($('.note-placeholder', mode)). //insert into new mode
-            draggable(); //make draggable again
-        }
-
-        $( ".draggable" ).draggable();
-        $( ".droppable" ).droppable({
-          hoverClass: 'hovered',
-          drop: function( event, ui ) {
-            var mode = $(this);
-            var mode_id = mode.attr('id');
-            var note = ui.draggable;
-            moveNoteToMode(note, this);
-            //Send Post request, sinatra handles this to update
-            $.post("note/" + note.attr('id'), {mode_name: mode_id});
-          }
-        });
-
-      });
-    </script>
+    <script src='/corkboard.js'></script>
 
   </body>
 </html>
