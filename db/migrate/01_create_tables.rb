@@ -5,6 +5,7 @@ class CreateTables < ActiveRecord::Migration
       t.belongs_to  :user
       t.belongs_to  :mode 
       t.belongs_to  :colour
+      t.belongs_to  :board
       t.string   "title"
       t.text     "description"
 
@@ -17,12 +18,14 @@ class CreateTables < ActiveRecord::Migration
       #t.has_many :colour
       t.string "name"
       t.string "email"
+      t.string "auth"
 
       t.timestamps
     end
 
     create_table "modes", :force => true do |t|
       t.belongs_to :user
+      t.belongs_to :board
       t.string "title"
 
       t.timestamps
@@ -36,7 +39,16 @@ class CreateTables < ActiveRecord::Migration
       t.timestamps
     end
 
+    create_table "boards", :force => true do |t|
+      t.belongs_to :user
 
+      t.string  "title"
+      t.integer "read_security"
+      t.integer "write_security"
+      t.string  "layout"
+
+      t.timestamps
+    end
 
 
   end
@@ -46,5 +58,6 @@ class CreateTables < ActiveRecord::Migration
     drop_table :users
     drop_table :modes
     drop_table :colours
+    drop_table :boards
   end
 end
