@@ -2,7 +2,6 @@
 # http://www.endyourif.com/drag-and-drop-with-ajax-example/
 
 require 'rubygems'
-#require 'sinatra'
 require 'sinatra/base'
 require 'sinatra/session'
 require "sinatra/reloader"
