@@ -1,5 +1,5 @@
 require 'rubygems'
-require 'app'
+require './app'
 
 run PostIt::App
 
