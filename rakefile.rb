@@ -25,7 +25,7 @@ end
 
 task :environment do
 
-  db = postgres://username:password@hostname/database
+  ## db = postgres://username:password@hostname/database
   db = ENV['DATABASE_URL']
   if db.match(/postgres:\/\/(.*):(.*)@(.*)\/(.*)/) 
 
