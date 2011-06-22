@@ -1,13 +1,14 @@
 source :rubygems
 
+gem "heroku", "~>2"
 gem "sinatra", "~>1" 
 gem "activerecord", "~>3" 
-gem "heroku", "~>2"
+gem "sinatra-session", "~>1"
 
-group :devel do
+group :development do
   gem "sinatra-reloader", "~>0"
-  gem "sinatra-session", "~>1"
   gem "sqlite3-ruby", "~>1"
+  gem "thin", "~>1"
 end
 
 group :test do
