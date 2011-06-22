@@ -24,12 +24,23 @@ task :environment_devel do
 end
 
 task :environment do
-  ActiveRecord::Base.establish_connection(ENV['DATABASE_URL']);
-  #ActiveRecord::Base.establish_connection(
-  #    :adapter  => 'postgresql',
-  #    :host     => '.compute-1.amazonaws.com',
-  #    :username => '',
-  #    :password => '',
-  #    :database => ''
-  #)
+
+  db = postgres://username:password@hostname/database
+  db = ENV['DATABASE_URL']
+  if db.match(/postgres:\/\/(.*):(.*)@(.*)\/(.*)/) 
+
+    username = $1
+    password = $2
+    hostname = $3
+    database = $4
+
+    ActiveRecord::Base.establish_connection(
+      :adapter  => 'postgresql',
+      :host     => hostname,
+      :username => username,
+      :password => password,
+      :database => database
+    )
+  end
+  #ActiveRecord::Base.establish_connection(ENV['DATABASE_URL']);
 end
