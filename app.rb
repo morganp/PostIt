@@ -21,6 +21,8 @@ module PostIt
 
   class Board < ActiveRecord::Base
     belongs_to :user
+    has_many   :modes
+    has_many   :notes
   end
 
   class Mode < ActiveRecord::Base
@@ -65,14 +67,21 @@ module PostIt
     end
 
     configure :production do
-      ActiveRecord::Base.establish_connection(ENV['DATABASE_URL']);
-      #  :adapter  => 'postgresql',
-      #  :host     => '',
-      #  :username => '',
-      #  :password => '',
-      #  :database => '');
+      db = ENV["DATABASE_URL"]
+      if db.match(/postgres:\/\/(.*):(.*)@(.*)\/(.*)/) 
+        username = $1
+        password = $2
+        hostname = $3
+        database = $4
 
-      #        Sequel.connect(ENV['DATABASE_URL'] || 'sqlite://my.db')
+        ActiveRecord::Base.establish_connection(
+          :adapter  => 'postgresql',
+          :host     => hostname,
+          :username => username,
+          :password => password,
+          :database => database
+        )
+      end
     end
 
 
@@ -87,6 +96,10 @@ module PostIt
     ## TODO ##
     # Acts as lists for reordering posts
     # https://rubygems.org/gems/acts_as_list
+
+    #Some session setup
+    set :session_fail, '/login'
+
 
     ## ROUTES ##
     # These direct web requests
@@ -110,6 +123,24 @@ module PostIt
       @user  = User.find_by_email('morgan.prior@gmail.com')
       @modes = @user.modes.all
       @notes = @user.notes.all
+
+      erb :'lists'
+    end
+
+    get '/board/?' do
+      session! #Checks for valid session
+      @user    = User.find_by_id( session[:user_id] )
+      @boards  = @user.boards
+
+      erb :'boards_all'
+    end
+
+    get '/board/:id/?' do
+      session! #Checks for valid session
+      @user    = User.find_by_id( session[:user_id] )
+      @board   = @user.boards.find_by_id( params[:id] )
+      @modes   = @board.modes
+      @notes   = @board.notes
 
       erb :'lists'
     end
@@ -138,12 +169,40 @@ module PostIt
     end
 
 
+
+    ## Session User Authentication Routes
     get '/signup/?' do
- 'signup'
+      'signup'
     end
 
     get '/login/?' do
-  'login'
+      if session?
+        redirect '/'
+      else
+        erb :'login'
+      end
+    end
+
+    post '/login' do
+      email = params['post']['email']
+
+      if email
+        session_start!
+        session[:email]   = email
+        session[:auth]    = params['post']['auth']
+        @user             = User.find_by_email( email )
+        session[:user_id] = @user.id
+        #Allow redirect param from form
+        redirect params['post']['redirect'] if params['post']['redirect']
+        redirect '/'
+      else
+        redirect '/login'
+      end
+    end
+
+    get '/logout' do
+      session_end!
+      redirect '/'
     end
 
 
