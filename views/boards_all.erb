@@ -1,12 +1,19 @@
 <div id="content">
-  <div class='first-h2 mode'>
-    <h2 >Boards</h2>
-    <table>
-      <% for board in @boards %>
-        <tr>
-          <td><a href='/board/<%= board.id %>'><%= board.title %></a></td>
-        </tr>
-      <% end %>
-    </table>
+  <div id='board_list' class='droppable ui-widget-header page_title'>
+    <h2>
+      Boards
+      <small><a href='#' class='new-board'>+</a></small>
+    </h2>
+
+    <% for board in @boards  %>
+      <div id="<%= board.id %>" class="board draggable ui-widget-content"> 
+        <div class="title">
+          <a href='/board/<%=board.id%>'><%= board.title %></a>
+        </div>
+      </div>
+    <% end %>
+
+    <div class="board-placeholder"></div>
+
   </div>
 </div>

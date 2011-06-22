@@ -27,6 +27,13 @@ h2 {
   border-bottom: 2px black solid;
 }
 
+/* generic header */
+.page_title {
+  padding: 10px;
+}
+.page_title h2 {
+  margin-top: 10px;
+}
 
 
 .mode {
@@ -54,6 +61,63 @@ background-color: rgba(0,0,0,0.2);
   #Done {
   background-color: rgba(0,0,0,0.05);
 }*/
+
+/* Board List Styling */
+.board, .board-placeholder {
+  width: 100px;
+  height: 100px;
+  float: left;
+  border: 2px solid; 
+  padding: 3px;
+  margin: 5px;
+}
+.board-placeholder {
+  border: 3px yellow dashed;
+  margin: 3px;
+  visibility: hidden;
+}
+
+.hovered .board-placeholder {
+  visibility: visible;
+}
+
+.new-board {
+  border-radius: 40px;
+  -webkit-border-radius: 40px;
+  -moz-border-radius: 40px;
+  height: 30px;
+  width: 30px;
+  display: inline-block;
+  background-color: rgba(255,255,255,0.5);
+  font-size: 40px;
+  line-height: 25px;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+}
+
+
+.board {
+  z-index: 100;
+  border:1px solid #FFF057;
+  background-color: rgba(60, 132, 198, 0.8);
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 90%, from(#FFFAAE), to(#FFF057));
+  background-image: -moz-linear-gradient(#FFFAAE 0%, #FFF057 90%);
+  -webkit-box-shadow: rbga(0,0,0,0.2) 0px 5px 5px;
+  -moz-box-shadow: rgba(0,0,0,0.2) 0px 5px 5px; /* FF 3.5+ */
+  font-family: 'Copse', Times, serif;
+}
+
+.board .title {
+  border-bottom: 1px black solid;
+}
+
+.board input {
+  width: 94px;
+}
+
+
+
 
 /* Note Styling */
 .note, .note-placeholder {

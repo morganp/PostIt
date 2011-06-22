@@ -105,7 +105,7 @@ module PostIt
     # There are 4 Restful types, POST(create), PUT(update), GET(view), DELETE(gone)
 
     get '/' do
-      redirect '/list'
+      redirect '/boards'
     end
 
     get '/debug' do
@@ -118,15 +118,15 @@ module PostIt
     end
 
 
-    get '/list/?' do
-      @user  = User.find_by_email('morgan.prior@gmail.com')
-      @modes = @user.modes.all
-      @notes = @user.notes.all
+    #get '/list/?' do
+    #  @user  = User.find_by_email('morgan.prior@gmail.com')
+    #  @modes = @user.modes.all
+    #  @notes = @user.notes.all
+    #
+    #      erb :'lists'
+    #    end
 
-      erb :'lists'
-    end
-
-    get '/board/?' do
+    get '/boards?/?' do
       session! #Checks for valid session
       @user    = User.find_by_id( session[:user_id] )
       @boards  = @user.boards
@@ -142,6 +142,33 @@ module PostIt
       @notes   = @board.notes
 
       erb :'lists'
+    end
+
+    post '/board/create' do
+      session! #Checks for valid session
+      @user    = User.find_by_id( session[:user_id] )
+      @board   = @user.boards.create(
+        :title          => params['title'],
+        :read_security  => 1,
+        :write_security => 1,
+        :layout         => '[3]'
+      )
+      @board.save
+
+      "#{@board.id}"
+    end
+
+
+    post '/board/:id' do
+      session! #Checks for valid session
+      @user                 = User.find_by_id( session[:user_id] )
+      @board                = @user.boards.find_by_id( params[:id] )
+      @board.title          = params['title'] if params['title']
+      @board.read_security  = params['read_security'] if params['read_security']
+      @board.write_security = params['write_security'] if params['write_security']
+      @board.layout         = params['layout'] if params['layout']
+
+      @board.save
     end
 
 
@@ -170,8 +197,31 @@ module PostIt
 
 
     ## Session User Authentication Routes
-    get '/signup/?' do
-      'signup'
+    post '/signup/?' do
+      @user = User.create(
+        :name  => params['post']['name'],
+        :email => params['post']['email'],
+        :auth  => params['post']['auth']
+      )
+      @user.save
+
+      if @user
+        session_start!
+        session[:user_id] = @user.id
+        session[:email]   = email
+        session[:auth]    = params['post']['auth']
+        
+        @board = @user.boards.create(
+          :title => 'Mainboard'
+        )
+        @board.modes.create(
+          :title => 'General Notes'
+        )
+
+        redirect "/board/#{@board.id}"
+      else
+        redirect '/login'
+      end
     end
 
     get '/login/?' do
@@ -208,45 +258,44 @@ module PostIt
 
     ## Tradional forms
     # From to create new
-    get '/note/create' do
-      @note = Note.new
-      @new  = true
-      erb :'note/note_edit'
-    end
+    #get '/note/create' do
+    #  @note = Note.new
+    #  @new  = true
+    #  erb :'note/note_edit'
+    #end
 
     # EDIT
-    get '/note/:id/edit' do
-      @note = Note.find_by_id(params[:id])
-      erb :'note/note_edit'
-    end
+    #get '/note/:id/edit' do
+    #  @note = Note.find_by_id(params[:id])
+    #  erb :'note/note_edit'
+    #end
 
     # CREATE
-    post '/note/?' do 
-      @user  = User.first
-      mode   = @user.modes.first
-      colour = @user.colours.first
-      @note  = Note.create(
-        :title       => params['post']['title'],
-        :description => params['post']['description'],
-        :mode_id     => mode.id,
-        :colour_id   => colour.id
-      )
-      @note.save
-      redirect '/list'
-    end
+    #post '/note/?' do 
+    #  @user  = User.first
+    #  mode   = @user.modes.first
+    #  colour = @user.colours.first
+    #  @note  = Note.create(
+    #    :title       => params['post']['title'],
+    #    :description => params['post']['description'],
+    #    :mode_id     => mode.id,
+    #    :colour_id   => colour.id
+    #  )
+    #  @note.save
+    #  redirect '/list'
+    #end
 
     # UPDATE
-    put '/note/:id/?' do
-      @note = Note.find_by_id(params[:id])
-      @note.title       = params['post']['title']
-      @note.description = params['post']['description']
-      #@note.mode_id     = mode.id
-      #@note.colour_id   = colour.id
+    #put '/note/:id/?' do
+    #  @note = Note.find_by_id(params[:id])
+    #  @note.title       = params['post']['title']
+    #  @note.description = params['post']['description']
+    #  #@note.mode_id     = mode.id
+    #  #@note.colour_id   = colour.id
 
-      @note.save
-      redirect '/list'
-    end
-
+    # @note.save
+    #     redirect '/list'
+    #    end
     #for large apps you can:
     #load 'other_file.rb'
 

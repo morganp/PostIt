@@ -1,5 +1,5 @@
 <div id="content">
-  <div class='first-h2 mode'>
+  <div class='page_title'>
     <h2>Login</h2>
     <form method="post" action="/login" >
       <input name="_method" type="hidden" value="post" />
@@ -16,8 +16,34 @@
           <td></td>
           <td><button type="submit">Login</button></td>
         </tr>
-      </div>
+      </table>
     </form>
+  </div>
+
+  <div class='page_title'>
+    <h2>Signup (Beta)</h2>
+    <form method="post" action="/signup" >
+      <input name="_method" type="hidden" value="post" />
+      <table>
+        <tr>
+          <td> Name </td>
+          <td><input type="text"  name="post[name]" value=""/></td>
+        </tr>
+        <tr>
+          <td> Email </td>
+          <td><input type="text"  name="post[email]" value=""/></td>
+        </tr>
+        <tr>
+          <td>Auth</td>
+          <td><input type="text"  name="post[auth]" value=""/></td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><button type="submit">SignUp</button></td>
+        </tr>
+      </table>
+    </form>
+
   </div>
 </div>
 

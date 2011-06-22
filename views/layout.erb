@@ -10,13 +10,14 @@
   </head>
   <body>
     <div id='header'>
-      Select Board | Board Options| Edit Modes | Login/Logout
+      <a href='/boards/'>Boards</a> | Board Options| Edit Modes | <a href='/login'>login</a>/<a href='/logout'>logout</a>
     </div>
 <%= yield %>
     
     <!-- JavaScript at the bottom for fast page loading -->
 
     <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if necessary -->
+    <script> console.log(2);</script>
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js"></script>
     <script>window.jQuery || document.write("<script src='/scripts/jquery-1.6.1.js'>\x3C/script>")</script>
 
