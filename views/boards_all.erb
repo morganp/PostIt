@@ -1,0 +1,12 @@
+<div id="content">
+  <div class='first-h2 mode'>
+    <h2 >Boards</h2>
+    <table>
+      <% for board in @boards %>
+        <tr>
+          <td><a href='/board/<%= board.id %>'><%= board.title %></a></td>
+        </tr>
+      <% end %>
+    </table>
+  </div>
+</div>
