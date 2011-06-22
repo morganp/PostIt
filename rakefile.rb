@@ -28,7 +28,6 @@ task :environment do
   ## db = "postgres://username:password@hostname/database"
   db = ENV["DATABASE_URL"]
   if db.match(/postgres:\/\/(.*):(.*)@(.*)\/(.*)/) 
-
     username = $1
     password = $2
     hostname = $3
@@ -42,5 +41,4 @@ task :environment do
       :database => database
     )
   end
-  #ActiveRecord::Base.establish_connection(ENV['DATABASE_URL']);
 end
