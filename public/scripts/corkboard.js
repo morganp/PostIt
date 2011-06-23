@@ -75,15 +75,15 @@ $(function() {
   });
 
   //Board Functions
-  function postNewBoard(board, attributes) {
+  function postNewBoard(board, attributes, callback) {
       //      console.log('postNewBoard ');
       //      console.log(board);
       //      console.log(attributes);
     
     $.post("/board/create", attributes, function(data) {
       board.attr('id', data);
+      callback(data);
     });
-    //return data
   }
 
   function postBoardUpdate(id, attributes) {
@@ -114,12 +114,11 @@ $(function() {
           if (id) {
             postBoardUpdate(board.attr('id'), attributes);
           } else {
-            postNewBoard(board, attributes);
-            id = board.attr('id');
+            postNewBoard(board, attributes, function(new_id) {
+              title.html('<a href="/board/' + new_id + '">' + new_title + '</a>');
+            });
           }
 
-
-          title.html('<a href="/board/' + id + '">' + new_title + '</a>');
           //description.html(new_description);
 
           board.removeClass('editing');
