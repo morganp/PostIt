@@ -14,6 +14,12 @@
   z-index: 10000;
 }
 
+#header a {  text-decoration: none;}
+#header a:link    { color: #DDD; } 
+#header a:visited { color: #DDD; }
+#header a:hover   { color: #FFF; } 
+#header a:active  { color: #FFF; } 
+
 
 /* List Page Styling */
 body {

@@ -1,0 +1,58 @@
+<div id="content">
+  <% @title = "Edit" %>
+  <div class='page_title'>
+    <h2>Edit Board : <%= @board.title %></h2>
+  </div>
+  <%# @new is true for new ojects and nil for updates %>
+  <form method="post" action="/board/<%=@board.id%>" >
+    <input name="_method" type="hidden" value="put" />
+    <table>
+      <tr>
+        <td>Title</td>
+        <td><input type="text"  name="post[title]" value="<%=@board.title%>"/></tr>
+      </tr>
+      <tr>
+        <td>Read Permissions</td>
+        <td><input type="text"  name="post[read_security]" value="<%=@board.read_security%>"/></td>
+      </tr>
+      <tr>
+        <td>Write Permissions</td>
+        <td><input type="text"  name="post[write_security]" value="<%=@board.write_security%>"/></td>
+      </tr>
+      <tr>
+        <td>Layout</td>
+        <td><input type="text"  name="post[layout]" value="<%=@board.layout%>"/></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><button type="submit">Update</button></td>
+      </tr>
+      </table
+    </form>
+
+    <!-- Edit Modes associated with this board -->
+    <h2>Modes</h2>
+    <table>
+
+      <% @board.modes.each do |mode| %>
+        <tr>
+          <td><%= mode.title %></td>
+          <td>edit</td>
+          <td>delete</td>
+          <td>up</td>
+          <td>down</td>
+        </tr>
+      <% end %>
+      <tr>
+        <form method="post" action="/board/<%=@board.id%>/mode" >
+          <input name="_method" type="hidden" value="post" />
+          <td><input type="text"  name="post[title]" value=""/></td>
+          <td><button type="submit">Add Mode</button></td>
+        </form>
+      </tr>
+    </table>
+
+
+
+
+  </div>

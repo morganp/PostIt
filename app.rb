@@ -131,7 +131,7 @@ module PostIt
       @user    = User.find_by_id( session[:user_id] )
       @boards  = @user.boards
 
-      erb :'boards_all'
+      erb :'board/boards_all'
     end
 
     get '/board/:id/?' do
@@ -144,6 +144,14 @@ module PostIt
       erb :'lists'
     end
 
+    get '/board/:id/edit/?' do
+      session! #Checks for valid session
+      @user    = User.find_by_id( session[:user_id] )
+      @board   = @user.boards.find_by_id( params[:id] )
+
+      erb :'board/board_edit'
+    end
+
     post '/board/create' do
       session! #Checks for valid session
       @user    = User.find_by_id( session[:user_id] )
@@ -153,12 +161,16 @@ module PostIt
         :write_security => 1,
         :layout         => '[3]'
       )
+
+      @board.modes.create(
+        :title         => 'Notes'
+      )
       @board.save
 
       "#{@board.id}"
     end
 
-
+    ## AJAX call, to update a board 
     post '/board/:id' do
       session! #Checks for valid session
       @user                 = User.find_by_id( session[:user_id] )
@@ -171,6 +183,19 @@ module PostIt
       @board.save
     end
 
+    ## Add a board from /board/:id/edit
+    # possibility to make this an ajax call
+    post '/board/:id/mode' do
+      session! #Checks for valid session
+      @user                 = User.find_by_id( session[:user_id] )
+      @board                = @user.boards.find_by_id( params[:id] )
+      @mode = @board.modes.create(
+        :title => params['post']['title']
+      )
+      @mode.save
+
+      redirect "/board/#{params[:id]}/edit"
+    end
 
     post '/note/create' do
       #AJAX Note creation 
@@ -210,7 +235,7 @@ module PostIt
         session[:user_id] = @user.id
         session[:email]   = email
         session[:auth]    = params['post']['auth']
-        
+
         @board = @user.boards.create(
           :title => 'Mainboard'
         )
