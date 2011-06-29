@@ -4,7 +4,6 @@
 require 'rubygems'
 require 'sinatra/base'
 require 'sinatra/session'
-require "sinatra/reloader"
 
 require 'active_record'
 
@@ -50,6 +49,8 @@ module PostIt
 
     #Configure Modules ran when starting/restarting Server
     configure :development do
+      require "sinatra/reloader"
+      
       puts "Development"
       register Sinatra::Reloader
       #also_reload "models/*.rb"
