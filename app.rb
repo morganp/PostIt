@@ -234,8 +234,8 @@ module PostIt
       if @user
         session_start!
         session[:user_id] = @user.id
-        session[:email]   = email
-        session[:auth]    = params['post']['auth']
+        session[:email]   = @user.email
+        session[:auth]    = @user.auth
 
         @board = @user.boards.create(
           :title => 'Mainboard'
