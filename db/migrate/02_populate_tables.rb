@@ -25,6 +25,7 @@ end
 
 class Board < ActiveRecord::Base
   belongs_to :user
+  has_many :modes
 end
 
 class PopulateTables < ActiveRecord::Migration
@@ -35,16 +36,16 @@ class PopulateTables < ActiveRecord::Migration
       :auth  => 'xyz'
     )
 
-    @user.boards.create(
+    @board = @user.boards.create(
       :title => 'Mainboard',
       :read_security => 1,
       :write_security => 1,
       :layout => '[3]'
     )
 
-    @icebox = @user.modes.create(      :title => 'IceBox', :board_id => @user.boards.first.id  )
-    @todo   = @user.modes.create(      :title => 'ToDo',   :board_id => @user.boards.first.id  )
-    @done   = @user.modes.create(      :title => 'Done',   :board_id => @user.boards.first.id  )
+    @icebox = @board.modes.create(      :title => 'IceBox', :board_id => @user.boards.first.id  )
+    @todo   = @board.modes.create(      :title => 'ToDo',   :board_id => @user.boards.first.id  )
+    @done   = @board.modes.create(      :title => 'Done',   :board_id => @user.boards.first.id  )
     
     @colour = @user.colours.create(
       :background => '#EDACF0',
@@ -54,25 +55,35 @@ class PopulateTables < ActiveRecord::Migration
     @icebox.notes.create(
       :title => 'First Note',
       :description => 'example note',
-      :colour_id => @user.modes.first.id
-      
+      :colour_id => Colour.first.id, 
+      :board_id => @icebox.board_id,
+      :user_id => @user.id
+
     )
 
     @icebox.notes.create(
       :title => 'Second Note',
       :description => 'example note',
-      :colour_id => @user.modes.first.id
+      :colour_id => Colour.first.id, 
+      :board_id => @icebox.board_id,
+      :user_id => @user.id
     )
 
     @todo.notes.create(
       :title => 'Third Note',
       :description => 'example note',
-      :colour_id => @user.modes.first.id
+      :colour_id => Colour.first.id, 
+      :board_id => @icebox.board_id,
+      :user_id => @user.id
+
     )
     @todo.notes.create(
       :title => 'Fourth Note',
       :description => 'example note',
-      :colour_id => @user.modes.first.id
+      :colour_id => Colour.first.id, 
+      :board_id => @icebox.board_id,
+      :user_id => @user.id
+
     )
 
 
