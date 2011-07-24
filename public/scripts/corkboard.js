@@ -76,12 +76,11 @@ $(function() {
     editNote($(this));
   });
 
+
+  //######################################################
   //Board Functions
+  //######################################################
   function postNewBoard(board, attributes, callback) {
-      //      console.log('postNewBoard ');
-      //      console.log(board);
-      //      console.log(attributes);
-    
     $.post("/board/create", attributes, function(data) {
       board.attr('id', data);
       callback(data);
@@ -97,21 +96,15 @@ $(function() {
       board.addClass('editing');
 
       var title = $('.title', board);
-      //var description = $('.description', not);
       var inp = $('<input type="text">').val(title.text().trim());
-      //var textArea = $('<textarea></textarea>').text(description.text().trim());
       
       var updateBoard = function(e) {
         if (e.which === 13) {
           var new_title = inp.val().trim();
-          //var new_description = textArea.val().trim();
-          //var new_mode_name = note.closest('.mode').attr('id');
 
           var id = board.attr('id');
           var attributes = {
             title: new_title 
-            //description: new_description,
-            //mode_name: new_mode_name
           };
           if (id) {
             postBoardUpdate(board.attr('id'), attributes);
@@ -121,17 +114,12 @@ $(function() {
             });
           }
 
-          //description.html(new_description);
-
           board.removeClass('editing');
         }
       };
       
       inp.keypress(updateBoard);
-      //textArea.keypress(updateBoard);
-
       title.html(inp);
-      //description.html(textArea);
     }
   }
 
