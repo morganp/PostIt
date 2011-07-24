@@ -4,6 +4,7 @@
 require 'rubygems'
 require 'sinatra/base'
 require 'sinatra/session'
+require 'sinatra/flash'
 
 require 'active_record'
 
@@ -45,6 +46,11 @@ module PostIt
     register Sinatra::Session
     use Rack::MethodOverride
     set :public, "public"
+    
+    # Flash messages
+    enable :sessions
+    register Sinatra::Flash
+    
 
 
     #Configure Modules ran when starting/restarting Server
@@ -141,6 +147,11 @@ module PostIt
       @board   = @user.boards.find_by_id( params[:id] )
       @modes   = @board.modes
       @notes   = @board.notes
+
+      if @modes.empty?
+        flash[:no_modes] = true
+        redirect '/board/' + params[:id] + '/edit'
+      end
 
       erb :'lists'
     end

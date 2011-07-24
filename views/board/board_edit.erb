@@ -3,6 +3,11 @@
   <div class='page_title'>
     <h2>Edit Board : <%= @board.title %></h2>
   </div>
+    <% if flash[:no_modes] %>
+      <h3 class='flash'> You can view the board once you have defined some modes </h3>
+      <h3 class='flash'>Consider : <ul><li>TODO</li><li>Active</li><li>Completed</li></h3>
+    <% end %>
+
   <%# @new is true for new ojects and nil for updates %>
   <form method="post" action="/board/<%=@board.id%>" >
     <input name="_method" type="hidden" value="put" />
