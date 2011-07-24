@@ -10,7 +10,21 @@
   </head>
   <body>
     <div id='header'>
-      <a href='/boards/'>Boards</a> | Board Options| Edit Modes | <a href='/login'>login</a>/<a href='/logout'>logout</a>
+      <a href='/boards/'>Boards</a> | 
+
+    <% if route.match(/^\/board\/\d+\/?$/) %> 
+      <a href='<%= route_noslash %>/edit'>Board setup</a> |
+    <% end %>
+    
+    <% if route.match(/^\/board\/\d+\/edit\/?$/) %> 
+      <a href='<%= route_noslash.sub(/\/edit$/, '') %>'>Back to Board</a> |
+    <% end %>
+    
+    <% if session?  %>
+      <a href='/logout'>logout</a>
+    <% else %>
+      <a href='/login'>login</a>
+    <% end %>
     </div>
 <%= yield %>
     
