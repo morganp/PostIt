@@ -18,11 +18,23 @@
   <% end %>
 </table>
 
+<h1>Boards</h1>
+<table class='form'>
+  <% for board in @boards %>
+    <tr>
+      <td><%= board.id %></td>
+      <td><%= board.title %></td>
+    </tr>
+  <% end %>
+</table>
+
 <h1>Modes</h1>
 <table class='form'>
   <% for mode in @modes %>
     <tr>
+      <td><%= mode.id %></td>
       <td><%= mode.title %></td>
+      <td>board:<%= mode.board_id %></td>
     </tr>
   <% end %>
 </table>
@@ -33,6 +45,9 @@
     <tr>
       <td><%= note.title %></td>
       <td><%= note.description %></td>
+      <td>user:<%= note.user_id %></td>
+      <td>board:<%= note.board_id %></td>
+      <td>mode:<%= note.mode_id %></td>
     </tr>
   <% end %>
 </table>
