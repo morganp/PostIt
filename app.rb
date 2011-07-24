@@ -190,7 +190,7 @@ end
         :layout         => '[3]'
       )
 
-      @board.modes.create(
+      @mode = @board.modes.create(
         :title         => 'Notes'
       )
       @board.save
@@ -220,7 +220,7 @@ end
       @user                 = User.find_by_id( session[:user_id] )
       @board                = @user.boards.find_by_id( params[:id] )
       
-      #if params['type'] == 'ajax'
+      if params['type'] == 'ajax'
         puts "Handling ajax"
         @board.title          = params['title'] if params['title']
         @board.read_security  = params['read_security'] if params['read_security']
@@ -230,16 +230,16 @@ end
         board = @board.save
         puts @board.inspect
         return board
-      #else
-      #  @board.title          = params['post']['title']
-      #  @board.read_security  = params['post']['read_security']
-      #  @board.write_security = params['post']['write_security']
-      #  @board.layout         = params['post']['layout']
+      else
+        @board.title          = params['post']['title']
+        @board.read_security  = params['post']['read_security']
+        @board.write_security = params['post']['write_security']
+        @board.layout         = params['post']['layout']
 
-       # @board.save
+        @board.save
 
-       # redirect "/board/#{params[:id]}"
-      #end
+        redirect "/board/#{params[:id]}"
+      end
     end
 
 
@@ -254,11 +254,13 @@ end
       
       @note             = @board.notes.new
       @note.user        = @user
-      @note.mode        = Mode.find_by_title( params['mode_name'] ) if params['mode_name']
+      
+
+      #TODO If 2 modes have the same name on the same board this update will not work! 
+      @note.mode        = @board.modes.find_by_title( params['mode_name'] ) if params['mode_name']
       @note.title       = params['title'] if params['title']
       @note.description = params['description'] if params['description']
 
-      puts @note.inspect
       @note.save
       puts @note.inspect
       "#{@note.id}"
@@ -271,9 +273,10 @@ end
       session! #Checks for valid session
       #This should all be based on a user, for security
       @user             = User.find_by_id( session[:user_id] )
+      @board            = @user.boards.find_by_id( params['board_id'] )
       @note             = Note.find_by_id(params[:id])
 
-      @note.mode        = Mode.find_by_title( params['mode_name'] ) if params['mode_name']
+      @note.mode        = @board.modes.find_by_title( params['mode_id'] ) if params['mode_id']
       @note.title       = params['title'] if params['title']
       @note.description = params['description'] if params['description']
       
