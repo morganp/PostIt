@@ -109,6 +109,7 @@ $(function() {
           };
           if (id) {
             postBoardUpdate(board.attr('id'), attributes);
+            title.html('<a href="/board/' + id + '">' + new_title + '</a>');
           } else {
             postNewBoard(board, attributes, function(new_id) {
               title.html('<a href="/board/' + new_id + '">' + new_title + '</a>');
