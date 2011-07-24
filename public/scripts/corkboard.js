@@ -26,15 +26,17 @@ $(function() {
       var description = $('.description', note);
       var inp = $('<input type="text">').val(title.text().trim());
       var textArea = $('<textarea></textarea>').text(description.text().trim());
+      var b_id  = $(location).attr('pathname').replace('/board/',''); 
       
       var updateNote = function(e) {
         if (e.which === 13) {
           var new_title = inp.val().trim();
-          var new_description = textArea.val().trim();
+          var new_description =  textArea.val().trim();
           var new_mode_name = note.closest('.mode').attr('id');
 
           var id = note.attr('id');
           var attributes = {
+            board_id: b_id,
             title: new_title, 
             description: new_description,
             mode_name: new_mode_name
