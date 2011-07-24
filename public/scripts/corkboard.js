@@ -15,7 +15,7 @@ $(function() {
     });
   }
   function postNoteUpdate(id, attributes) {
-    $.post("note/"+id, attributes);
+    $.post("/note/"+id, attributes);
   }
 
   function editNote(note) {
