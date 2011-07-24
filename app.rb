@@ -99,6 +99,21 @@ module PostIt
    "Application error"
     end
 
+helpers do
+  def base_url
+    @base_url ||= "#{request.env['rack.url_scheme']}://#{request.env['HTTP_HOST']}"
+  end
+
+  def route
+    request.url.sub( base_url, '' )
+  end
+
+  def route_noslash
+    route.sub( /\/$/, '')
+  end
+end
+    
+
     ## TODO ##
     # Acts as lists for reordering posts
     # https://rubygems.org/gems/acts_as_list
