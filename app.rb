@@ -133,6 +133,7 @@ end
     get '/debug' do
       @users   = User.all
       @colours = Colour.all
+      @boards   = Board.all
       @modes   = Mode.all
       @notes   = Note.all
 
