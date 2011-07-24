@@ -104,7 +104,8 @@ $(function() {
 
           var id = board.attr('id');
           var attributes = {
-            title: new_title 
+            type: 'ajax',
+            title: new_title
           };
           if (id) {
             postBoardUpdate(board.attr('id'), attributes);
