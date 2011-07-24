@@ -36,6 +36,11 @@ h2 {
 .flash {
   background-color: rgba(100, 100, 200, 0.5);
 }
+
+.form {
+  background-color: rgba(255, 240, 87, 0.8);
+}
+
 /* generic header */
 .page_title {
   padding: 10px;

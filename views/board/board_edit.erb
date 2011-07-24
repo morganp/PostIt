@@ -10,8 +10,9 @@
 
   <%# @new is true for new ojects and nil for updates %>
   <form method="post" action="/board/<%=@board.id%>" >
-    <input name="_method" type="hidden" value="put" />
-    <table>
+    <input name="_method" type="hidden" value="post" />
+    <input name="type" type="hidden" value="html" />
+    <table class='form'>
       <tr>
         <td>Title</td>
         <td><input type="text"  name="post[title]" value="<%=@board.title%>"/></tr>
@@ -37,7 +38,9 @@
 
     <!-- Edit Modes associated with this board -->
     <h2>Modes</h2>
-    <table>
+
+
+    <table class='form'>
 
       <% @board.modes.each do |mode| %>
         <tr>
