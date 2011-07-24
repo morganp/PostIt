@@ -149,9 +149,15 @@ $(function() {
       var mode    = $(this);
       var mode_id = mode.attr('id');
       var note    = ui.draggable;
+      var b_id  = $(location).attr('pathname').replace('/board/',''); 
+      var attributes = {
+        board_id: b_id,
+        mode_name: mode_id
+      };
+      
       moveNoteToMode(note, this);
       //Send Post request, sinatra handles this to update
-      postNoteUpdate(note.attr('id'), {mode_name: mode_id});
+      postNoteUpdate(note.attr('id'), attributes);
     }
   });
 

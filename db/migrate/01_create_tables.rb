@@ -42,6 +42,7 @@ class CreateTables < ActiveRecord::Migration
     create_table "boards", :force => true do |t|
       t.belongs_to :user
 
+      t.string  "alphakey"
       t.string  "title"
       t.integer "read_security"
       t.integer "write_security"

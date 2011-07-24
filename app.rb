@@ -111,6 +111,24 @@ helpers do
   def route_noslash
     route.sub( /\/$/, '')
   end
+
+  def gen_alphakey( size )
+    o =  [(1..9),('a'..'z'),('A'..'Z')].map{|i| i.to_a}.flatten;  
+    string  =  (0...size).map{ o[rand(o.length)]  }.join;
+  end
+
+  def gen_board_key
+    key = gen_alphakey( 8 )
+    
+    #No items found then the key is safe to use
+    unique = Board.find_by_alphakey( key )
+    if unique.nil?
+      return key
+    else
+      return gen_board_key 
+    end
+  end
+
 end
     
 
@@ -157,10 +175,10 @@ end
       erb :'board/boards_all'
     end
 
-    get '/board/:id/?' do
+    get '/board/:alphakey/?' do
       session! #Checks for valid session
       @user    = User.find_by_id( session[:user_id] )
-      @board   = @user.boards.find_by_id( params[:id] )
+      @board   = @user.boards.find_by_alphakey( params[:alphakey] )
       @modes   = @board.modes
       @notes   = @board.notes
 
@@ -172,10 +190,10 @@ end
       erb :'lists'
     end
 
-    get '/board/:id/edit/?' do
+    get '/board/:alphakey/edit/?' do
       session! #Checks for valid session
       @user    = User.find_by_id( session[:user_id] )
-      @board   = @user.boards.find_by_id( params[:id] )
+      @board   = @user.boards.find_by_alphakey( params[:alphakey] )
 
       erb :'board/board_edit'
     end
@@ -183,7 +201,9 @@ end
     post '/board/create' do
       session! #Checks for valid session
       @user    = User.find_by_id( session[:user_id] )
+      key = gen_board_key
       @board   = @user.boards.create(
+        :alphakey       => key,
         :title          => params['title'],
         :read_security  => 1,
         :write_security => 1,
@@ -195,30 +215,30 @@ end
       )
       @board.save
 
-      "#{@board.id}"
+      "#{@board.alphakey}"
     end
     
     ## Add a board from /board/:id/edit
     # possibility to make this an ajax call
-    post '/board/:id/add_mode' do
-      puts 'post /board/:id/add_mode'
+    post '/board/:alphakey/add_mode' do
+      puts 'post /board/:alphakey/add_mode'
       session! #Checks for valid session
       @user                 = User.find_by_id( session[:user_id] )
-      @board                = @user.boards.find_by_id( params[:id] )
+      @board                = @user.boards.find_by_alphakey( params[:alphakey] )
       @mode = @board.modes.create(
         :title => params['post']['title']
       )
       @mode.save
-      redirect "/board/#{params[:id]}/edit"
+      redirect "/board/#{params[:alphakey]}/edit"
     end
 
     ## AJAX call, to update a board 
-    post '/board/:id' do
-      puts "post /board/:id"
+    post '/board/:alphakey' do
+      puts "post /board/:alphakey"
       puts params.inspect
       session! #Checks for valid session
       @user                 = User.find_by_id( session[:user_id] )
-      @board                = @user.boards.find_by_id( params[:id] )
+      @board                = @user.boards.find_by_alphakey( params[:alphakey] )
       
       if params['type'] == 'ajax'
         puts "Handling ajax"
@@ -238,7 +258,7 @@ end
 
         @board.save
 
-        redirect "/board/#{params[:id]}"
+        redirect "/board/#{params[:alphakey]}"
       end
     end
 
@@ -250,7 +270,7 @@ end
       session! #Checks for valid session
       #This should all be based on a user, for security
       @user             = User.find_by_id( session[:user_id] )
-      @board            = @user.boards.find_by_id( params['board_id'] )
+      @board            = @user.boards.find_by_alphakey( params['board_id'] )
       
       @note             = @board.notes.new
       @note.user        = @user
@@ -273,10 +293,10 @@ end
       session! #Checks for valid session
       #This should all be based on a user, for security
       @user             = User.find_by_id( session[:user_id] )
-      @board            = @user.boards.find_by_id( params['board_id'] )
+      @board            = @user.boards.find_by_alphakey( params['board_id'] )
       @note             = Note.find_by_id(params[:id])
 
-      @note.mode        = @board.modes.find_by_title( params['mode_id'] ) if params['mode_id']
+      @note.mode        = @board.modes.find_by_title( params['mode_name'] ) if params['mode_name']
       @note.title       = params['title'] if params['title']
       @note.description = params['description'] if params['description']
       
@@ -310,7 +330,7 @@ end
           :title => 'General Notes'
         )
 
-        redirect "/board/#{@board.id}"
+        redirect "/board/#{@board.alphakey}"
       else
         redirect '/login'
       end

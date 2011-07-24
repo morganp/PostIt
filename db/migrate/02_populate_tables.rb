@@ -1,3 +1,17 @@
+
+  def gen_board_key
+    o    = [(1..9),('a'..'z'),('A'..'Z')].map{|i| i.to_a}.flatten;  
+    key  = (0...8).map{ o[rand(o.length)]  }.join;
+    
+    #No items found then the key is safe to use
+    unique = Board.find_by_alphakey( key )
+    if unique.nil?
+      return key
+    else
+      return gen_board_key 
+    end
+  end
+
 class User < ActiveRecord::Base
   has_many :notes
   has_many :modes
@@ -37,6 +51,7 @@ class PopulateTables < ActiveRecord::Migration
     )
 
     @board = @user.boards.create(
+      :alphakey => gen_board_key,
       :title => 'Mainboard',
       :read_security => 1,
       :write_security => 1,

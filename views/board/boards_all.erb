@@ -6,9 +6,9 @@
     </h2>
 
     <% for board in @boards  %>
-      <div id="<%= board.id %>" class="board draggable ui-widget-content"> 
+      <div id="<%= board.alphakey %>" class="board draggable ui-widget-content"> 
         <div class="title">
-          <a href='/board/<%=board.id%>'><%= board.title %></a>
+          <a href='/board/<%=board.alphakey%>'><%= board.title %></a>
         </div>
       </div>
     <% end %>
