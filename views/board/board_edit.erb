@@ -52,7 +52,7 @@
         </tr>
       <% end %>
       <tr>
-        <form method="post" action="/board/<%=@board.id%>/mode" >
+        <form method="post" action="/board/<%=@board.id%>/add_mode" >
           <input name="_method" type="hidden" value="post" />
           <td><input type="text"  name="post[title]" value=""/></td>
           <td><button type="submit">Add Mode</button></td>

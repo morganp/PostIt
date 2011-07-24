@@ -196,23 +196,11 @@ end
 
       "#{@board.id}"
     end
-
-    ## AJAX call, to update a board 
-    post '/board/:id' do
-      session! #Checks for valid session
-      @user                 = User.find_by_id( session[:user_id] )
-      @board                = @user.boards.find_by_id( params[:id] )
-      @board.title          = params['title'] if params['title']
-      @board.read_security  = params['read_security'] if params['read_security']
-      @board.write_security = params['write_security'] if params['write_security']
-      @board.layout         = params['layout'] if params['layout']
-
-      @board.save
-    end
-
+    
     ## Add a board from /board/:id/edit
     # possibility to make this an ajax call
-    post '/board/:id/mode' do
+    post '/board/:id/add_mode' do
+      puts 'post /board/:id/add_mode'
       session! #Checks for valid session
       @user                 = User.find_by_id( session[:user_id] )
       @board                = @user.boards.find_by_id( params[:id] )
@@ -220,28 +208,76 @@ end
         :title => params['post']['title']
       )
       @mode.save
-
       redirect "/board/#{params[:id]}/edit"
     end
 
+    ## AJAX call, to update a board 
+    post '/board/:id' do
+      puts "post /board/:id"
+      puts params.inspect
+      session! #Checks for valid session
+      @user                 = User.find_by_id( session[:user_id] )
+      @board                = @user.boards.find_by_id( params[:id] )
+      
+      #if params['type'] == 'ajax'
+        puts "Handling ajax"
+        @board.title          = params['title'] if params['title']
+        @board.read_security  = params['read_security'] if params['read_security']
+        @board.write_security = params['write_security'] if params['write_security']
+        @board.layout         = params['layout'] if params['layout']
+
+        board = @board.save
+        puts @board.inspect
+        return board
+      #else
+      #  @board.title          = params['post']['title']
+      #  @board.read_security  = params['post']['read_security']
+      #  @board.write_security = params['post']['write_security']
+      #  @board.layout         = params['post']['layout']
+
+       # @board.save
+
+       # redirect "/board/#{params[:id]}"
+      #end
+    end
+
+
     post '/note/create' do
+      puts "/note/create"
+      puts params.inspect
       #AJAX Note creation 
-      @note             = Note.new
+      session! #Checks for valid session
+      #This should all be based on a user, for security
+      @user             = User.find_by_id( session[:user_id] )
+      @board            = @user.boards.find_by_id( params['board_id'] )
+      
+      @note             = @board.notes.new
+      @note.user        = @user
       @note.mode        = Mode.find_by_title( params['mode_name'] ) if params['mode_name']
       @note.title       = params['title'] if params['title']
       @note.description = params['description'] if params['description']
 
+      puts @note.inspect
       @note.save
-
-   "#{@note.id}"
+      puts @note.inspect
+      "#{@note.id}"
     end
 
     post '/note/:id' do
+      puts "/note/:id"
+      puts params.inspect
+      #AJAX Note creation 
+      session! #Checks for valid session
+      #This should all be based on a user, for security
+      @user             = User.find_by_id( session[:user_id] )
       @note             = Note.find_by_id(params[:id])
 
       @note.mode        = Mode.find_by_title( params['mode_name'] ) if params['mode_name']
       @note.title       = params['title'] if params['title']
       @note.description = params['description'] if params['description']
+      
+      puts "/note/:id"
+      puts @note.inspect
 
       @note.save
     end
