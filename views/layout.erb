@@ -12,11 +12,11 @@
     <div id='header'>
       <a href='/boards/'>Boards</a> | 
 
-    <% if route.match(/^\/board\/\d+\/?$/) %> 
+    <% if route.match(/^\/board\/[0-9a-zA-Z]+\/?$/) %> 
       <a href='<%= route_noslash %>/edit'>Board setup</a> |
     <% end %>
     
-    <% if route.match(/^\/board\/\d+\/edit\/?$/) %> 
+    <% if route.match(/^\/board\/[0-9a-zA-Z]+\/edit\/?$/) %> 
       <a href='<%= route_noslash.sub(/\/edit$/, '') %>'>Back to Board</a> |
     <% end %>
     
