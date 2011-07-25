@@ -9,7 +9,7 @@
     <% end %>
 
   <%# @new is true for new ojects and nil for updates %>
-  <form method="post" action="/board/<%=@board.id%>" >
+  <form method="post" action="/board/<%=@board.alphakey%>" >
     <input name="_method" type="hidden" value="post" />
     <input name="type" type="hidden" value="html" />
     <table class='form'>
@@ -52,7 +52,7 @@
         </tr>
       <% end %>
       <tr>
-        <form method="post" action="/board/<%=@board.id%>/add_mode" >
+        <form method="post" action="/board/<%=@board.alphakey%>/add_mode" >
           <input name="_method" type="hidden" value="post" />
           <td><input type="text"  name="post[title]" value=""/></td>
           <td><button type="submit">Add Mode</button></td>

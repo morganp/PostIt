@@ -324,7 +324,10 @@ end
         session[:auth]    = @user.auth
 
         @board = @user.boards.create(
-          :title => 'Mainboard'
+          :alphakey       => gen_board_key,
+          :title          => 'Mainboard',
+          :read_security  => 1,
+          :write_security => 1,
         )
         @board.modes.create(
           :title => 'General Notes'
